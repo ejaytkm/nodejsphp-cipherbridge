@@ -16,9 +16,9 @@ function CryptoJSAesEncrypt (passphrase, plainText) {
   }
   return data
 }
-module.exports = (uri, publicKey, privateKey, extra = null) => {
+module.exports = (uri, publicKey, privateKey) => {
   return {
-    send: async (data) => {
+    send: async (data, extra = null) => {
       const encrypted = CryptoJSAesEncrypt(privateKey, data)
       const response = await request({
         uri: uri,
