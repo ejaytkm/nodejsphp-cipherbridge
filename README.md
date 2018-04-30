@@ -18,3 +18,8 @@ echo $string;
 When to use:
 - Simple encryption and decryption strings from javascript to php. Server engine - node js 9
 - Simply require the file, and fill details as the following
+
+Generate a new bridge public key & bridge private key
+```
+node node_modules/nodejsphp-cipherbridge/generation/generate.js
+```
