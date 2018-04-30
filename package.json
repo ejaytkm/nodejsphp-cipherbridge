@@ -1,6 +1,6 @@
 {
   "name": "nodejsphp-cipherbridge",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple data server bridge from node js to php with light encryption and security protocals. ",
   "main": "index.js",
   "scripts": {
