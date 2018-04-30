@@ -1,0 +1,27 @@
+{
+  "name": "nodejsphp-cipherbridge",
+  "version": "1.0.0",
+  "description": "Simple data server bridge from node js to php with light encryption and security protocals. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejaytkm/nodejsphp-cipherbridge.git"
+  },
+  "keywords": [
+    "encryption",
+    "nodejs-php-bridge"
+  ],
+  "author": "ejaytkm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ejaytkm/nodejsphp-cipherbridge/issues"
+  },
+  "homepage": "https://github.com/ejaytkm/nodejsphp-cipherbridge#readme",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "request-promise": "^4.2.2"
+  }
+}
