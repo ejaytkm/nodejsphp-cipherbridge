@@ -1,5 +1,6 @@
 const request = require('request-promise')
 const CryptoJS = require('crypto-js')
+
 function CryptoJSAesEncrypt (passphrase, plainText) {
   const salt = CryptoJS.lib.WordArray.random(256)
   const iv = CryptoJS.lib.WordArray.random(16)
@@ -8,6 +9,7 @@ function CryptoJSAesEncrypt (passphrase, plainText) {
     keySize: 64 / 8,
     iterations: 999
   })
+  
   const encrypted = CryptoJS.AES.encrypt(plainText, key, {iv: iv})
   const data = {
     ciphertext: CryptoJS.enc.Base64.stringify(encrypted.ciphertext),
@@ -16,6 +18,7 @@ function CryptoJSAesEncrypt (passphrase, plainText) {
   }
   return data
 }
+
 module.exports = (uri, publicKey, privateKey) => {
   return {
     send: async (data, extra = null) => {

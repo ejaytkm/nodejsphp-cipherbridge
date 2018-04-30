@@ -1,4 +1,5 @@
 <?php
+
 function decryptCipher($data, $privatekey) {
   $decoded = json_decode($data);
   $publickey = $decoded->public_key;
@@ -16,8 +17,7 @@ function decryptCipher($data, $privatekey) {
     };
   };
 
-  $salty = sha1($publickey);
-  $d = hash_hmac('sha1', $publickey, $salty);
+  $d = base64_encode(hash_hmac('SHA1', $publickey, '0', true));
 
   if ($d !== $privatekey) {
     throw new Exception('Wrong private key');
