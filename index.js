@@ -1,37 +1,29 @@
 const request = require('request-promise')
-const CryptoJS = require('crypto-js')
+const crypto = require('crypto')
 
-function CryptoJSAesEncrypt (passphrase, plainText) {
-  const salt = CryptoJS.lib.WordArray.random(256)
-  const iv = CryptoJS.lib.WordArray.random(16)
-  const key = CryptoJS.PBKDF2(passphrase, salt, {
-    hasher: CryptoJS.algo.SHA512,
-    keySize: 64 / 8,
-    iterations: 999
-  })
-  
-  const encrypted = CryptoJS.AES.encrypt(plainText, key, {iv: iv})
-  const data = {
-    ciphertext: CryptoJS.enc.Base64.stringify(encrypted.ciphertext),
-    salt: CryptoJS.enc.Hex.stringify(salt),
-    iv: CryptoJS.enc.Hex.stringify(iv)
+function encrypt (ENCRYPTION_KEY, plainText) {
+  let iv = crypto.randomBytes(16)
+  let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv)
+  let encrypted = cipher.update(plainText)
+  encrypted = Buffer.concat([encrypted, cipher.final()])
+
+  return {
+    iv: iv.toString('hex'),
+    ciphertext: encrypted.toString('hex')
   }
-  return data
 }
 
-module.exports = (uri, publicKey, privateKey) => {
+module.exports = (uri, ENCRYPTION_KEY) => {
   return {
     send: async (data, extra = null) => {
-      const encrypted = CryptoJSAesEncrypt(privateKey, data)
+      const encrypted = encrypt(ENCRYPTION_KEY, data)
       const response = await request({
         uri: uri,
         method: 'POST',
         json: true,
         body: JSON.stringify({
           ciphertext: encrypted.ciphertext,
-          salt: encrypted.salt,
           iv: encrypted.iv,
-          public_key: publicKey,
           extra: extra
         })
       })
